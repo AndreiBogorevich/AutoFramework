@@ -120,12 +120,18 @@ public class TestBase {
 		} else if (element.toLowerCase().contains("_linktext")) {
 			return driver.findElement(By.linkText(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_partiallinktext")) {
-			return driver.findElement(By.partialLinkText(OR
-					.getProperty(element)));
+			return driver.findElement(By.partialLinkText(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_classname")) {
 			return driver.findElement(By.className(OR.getProperty(element)));
 		}
 		return null;
+	}
+	
+	public boolean isElementPresent (String element){
+		if (getElement(element)!=null){
+			return true;
+		}
+		return false;
 	}
 
 	// ******************************************************
