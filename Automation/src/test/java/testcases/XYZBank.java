@@ -16,30 +16,29 @@ public class XYZBank extends TestBase {
 	@Test (priority=1)
 	public void depositTest() throws IOException {
 
-		doLogin(customer);
-
+		login(customer);
 		deposit(amount);
 	}
 
 	@Test (priority=2)
 	public void withdrawalTest() throws IOException {
 
-		doLogin(customer);
-
+		login(customer);
 		withdraw(amount);
 	}
 
-	public void doLogin(String customerName) throws IOException {
+	public void login(String customerName) throws IOException {
 
 		Assert.assertTrue(setOR("XYZBank", "login"));
 		driver.get(OR.getProperty("url"));
 
-		click("btnCustomerLogin_Xpath");
+		click("btnCustomerLogin_Xpath");		
 
 		Assert.assertTrue(setOR("XYZBank", "customer"));
 		Assert.assertEquals(driver.getCurrentUrl(), OR.getProperty("url"));
 
 		selectByVisibleText("selectYourName_Xpath", customerName);
+		
 		click("btnLogin_Xpath");
 	}
 

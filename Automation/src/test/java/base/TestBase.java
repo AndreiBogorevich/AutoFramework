@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,6 +31,7 @@ public class TestBase {
 	protected static WebDriver driver;
 	private static Properties config;
 	protected static Properties OR;
+	protected static Logger log = Logger.getLogger("Auto");
 
 	@BeforeSuite
 	public void setUp() throws IOException {
@@ -38,7 +40,7 @@ public class TestBase {
 		setConfig();
 
 		// initialising browser that is set up in config.properties file
-		driver = Browsers.getBrowser(config.getProperty("browser"));
+		driver = Browsers.getBrowser(config.getProperty("browser"));		
 
 		// navigating to the starting url as per config.properties file
 		driver.get(config.getProperty("startUrl"));
@@ -72,8 +74,11 @@ public class TestBase {
 					System.getProperty("user.dir")
 							+ "\\src\\test\\resources\\properties\\config.properties");
 			config.load(fis);
+			log.info("Config.properties successfully loaded");
 			return true;
 		} catch (Throwable t) {
+			log.error("Error loading config.properties");
+			log.error(t.getMessage());
 			return false;
 		}
 	}
@@ -91,10 +96,11 @@ public class TestBase {
 							+ site + "\\" + page + ".properties");
 
 			OR.load(fis);
-
+			log.info(site + "\\" + page + ".properties" + " is successfully loaded into OR property." );
 			return true;
 		} catch (Throwable t) {
-			System.out.println(t.getMessage());
+			log.error("Error loading "+ site + "\\" + page + ".properties");
+			log.error(t.getMessage());
 			return false;
 		}
 	}
@@ -128,17 +134,20 @@ public class TestBase {
 	public void click(String element) {
 
 		getElement(element).click();
+		log.info("Clicked " + element);
 		waitForPageToLoad();
 	}
 
 	public void type(String element, String text) {
 
 		getElement(element).sendKeys(text);
+		log.info("Typed " + text + " into " + element);
 	}
 
 	public void selectByVisibleText(String element, String visibleText) {
 		Select sel = new Select(getElement(element));
 		sel.selectByVisibleText(visibleText);
+		log.info("Selected " + visibleText + " in the " + element);		
 	}
 
 	public String read(String element) {
@@ -166,9 +175,7 @@ public class TestBase {
 					Integer.parseInt(config.getProperty("explicitWait")));
 			wait.until(expectation);
 		} catch (Throwable error) {
-			// TO DO: add propeper handling here
-			System.out
-					.println("Timeout waiting for Page Load Request to complete.");
+			log.error ("Timed out loading a page.");
 			Assert.fail();
 		}
 	}
