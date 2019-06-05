@@ -1,7 +1,6 @@
 package testcases;
 
 import java.io.IOException;
-import org.openqa.selenium.WebDriver;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,14 +12,14 @@ public class XYZBank extends TestBase {
 	private String customer = "Harry Potter";
 	private int amount = 1250;
 
-	@Test (priority=1)
+	@Test(priority = 1)
 	public void depositTest() throws IOException {
 
 		login(customer);
 		deposit(amount);
 	}
 
-	@Test (priority=2)
+	@Test(priority = 2)
 	public void withdrawalTest() throws IOException {
 
 		login(customer);
@@ -32,13 +31,13 @@ public class XYZBank extends TestBase {
 		Assert.assertTrue(setOR("XYZBank", "login"));
 		driver.get(OR.getProperty("url"));
 
-		click("btnCustomerLogin_Xpath");		
+		click("btnCustomerLogin_Xpath");
 
 		Assert.assertTrue(setOR("XYZBank", "customer"));
 		Assert.assertEquals(driver.getCurrentUrl(), OR.getProperty("url"));
 
 		selectByVisibleText("selectYourName_Xpath", customerName);
-		
+
 		click("btnLogin_Xpath");
 	}
 

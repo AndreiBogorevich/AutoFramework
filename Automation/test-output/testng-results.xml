@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="5438" started-at="2019-06-03T10:10:43Z" finished-at="2019-06-03T10:10:48Z">
+  <suite name="Default suite" duration-ms="9697" started-at="2019-06-05T21:09:39Z" finished-at="2019-06-05T21:09:49Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="5438" started-at="2019-06-03T10:10:43Z" finished-at="2019-06-03T10:10:48Z">
+    <test name="Default test" duration-ms="9697" started-at="2019-06-05T21:09:39Z" finished-at="2019-06-05T21:09:49Z">
       <class name="testcases.XYZBank">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:testcases.XYZBank@1fbc7afb]" name="setUp" is-config="true" duration-ms="7233" started-at="2019-06-03T11:10:35Z" finished-at="2019-06-03T11:10:43Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:testcases.XYZBank@2ed0fbae]" name="setUp" is-config="true" duration-ms="6905" started-at="2019-06-05T22:09:32Z" finished-at="2019-06-05T22:09:39Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="depositTest()[pri:0, instance:testcases.XYZBank@1fbc7afb]" name="depositTest" duration-ms="5402" started-at="2019-06-03T11:10:43Z" finished-at="2019-06-03T11:10:48Z">
+        <test-method status="PASS" signature="depositTest()[pri:1, instance:testcases.XYZBank@2ed0fbae]" name="depositTest" duration-ms="4988" started-at="2019-06-05T22:09:39Z" finished-at="2019-06-05T22:09:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- depositTest -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:testcases.XYZBank@1fbc7afb]" name="tearDown" is-config="true" duration-ms="736" started-at="2019-06-03T11:10:48Z" finished-at="2019-06-03T11:10:49Z">
+        <test-method status="PASS" signature="withdrawalTest()[pri:2, instance:testcases.XYZBank@2ed0fbae]" name="withdrawalTest" duration-ms="4693" started-at="2019-06-05T22:09:44Z" finished-at="2019-06-05T22:09:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- withdrawalTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:testcases.XYZBank@2ed0fbae]" name="tearDown" is-config="true" duration-ms="832" started-at="2019-06-05T22:09:49Z" finished-at="2019-06-05T22:09:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

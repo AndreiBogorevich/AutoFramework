@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="0" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="base.TestBase" duration-ms="0" started-at="2019-06-02T20:29:00Z" finished-at="2019-06-02T20:29:00Z">
+  <suite name="base.TestBase" duration-ms="4" started-at="2019-06-05T21:08:56Z" finished-at="2019-06-05T21:08:56Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="0" started-at="2019-06-02T20:29:00Z" finished-at="2019-06-02T20:29:00Z">
+    <test name="Command line test" duration-ms="4" started-at="2019-06-05T21:08:56Z" finished-at="2019-06-05T21:08:56Z">
       <class name="base.TestBase">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:base.TestBase@1554909b]" name="setUp" is-config="true" duration-ms="6805" started-at="2019-06-02T20:28:53Z" finished-at="2019-06-02T20:29:00Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:base.TestBase@27c86f2d]" name="setUp" is-config="true" duration-ms="6515" started-at="2019-06-05T21:08:49Z" finished-at="2019-06-05T21:08:56Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:base.TestBase@1554909b]" name="tearDown" is-config="true" duration-ms="735" started-at="2019-06-02T20:29:00Z" finished-at="2019-06-02T20:29:00Z">
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:base.TestBase@27c86f2d]" name="tearDown" is-config="true" duration-ms="704" started-at="2019-06-05T21:08:56Z" finished-at="2019-06-05T21:08:56Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
