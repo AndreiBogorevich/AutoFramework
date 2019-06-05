@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +16,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
-
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -31,7 +31,9 @@ public class TestBase {
 	protected static WebDriver driver;
 	private static Properties config;
 	protected static Properties OR;
-	protected static Logger log = Logger.getLogger("Auto");
+	// the Logger will dynamically report the name pf the method from which it
+	// was called
+	protected static Logger log = LogManager.getLogger("log4j");;
 
 	@BeforeSuite
 	public void setUp() throws IOException {
@@ -40,7 +42,7 @@ public class TestBase {
 		setConfig();
 
 		// initialising browser that is set up in config.properties file
-		driver = Browsers.getBrowser(config.getProperty("browser"));		
+		driver = Browsers.getBrowser(config.getProperty("browser"));
 
 		// navigating to the starting url as per config.properties file
 		driver.get(config.getProperty("startUrl"));
@@ -68,17 +70,24 @@ public class TestBase {
 
 	public static boolean setConfig() {
 
+//		Logger log = LogManager.getLogger("setConfig");
+
 		try {
 			config = new Properties();
 			FileInputStream fis = new FileInputStream(
 					System.getProperty("user.dir")
 							+ "\\src\\test\\resources\\properties\\config.properties");
 			config.load(fis);
+
 			log.info("Config.properties successfully loaded");
+
 			return true;
+
 		} catch (Throwable t) {
+
 			log.error("Error loading config.properties");
 			log.error(t.getMessage());
+
 			return false;
 		}
 	}
@@ -88,6 +97,9 @@ public class TestBase {
 	}
 
 	public static boolean setOR(String site, String page) {
+
+//		Logger log = LogManager.getLogger("setOR");
+
 		try {
 			OR = new Properties();
 			FileInputStream fis = new FileInputStream(
@@ -96,11 +108,17 @@ public class TestBase {
 							+ site + "\\" + page + ".properties");
 
 			OR.load(fis);
-			log.info(site + "\\" + page + ".properties" + " is successfully loaded into OR property." );
+
+			log.info(site + "\\" + page + ".properties"
+					+ " is successfully loaded into OR property.");
+
 			return true;
+
 		} catch (Throwable t) {
-			log.error("Error loading "+ site + "\\" + page + ".properties");
+
+			log.error("Error loading " + site + "\\" + page + ".properties");
 			log.error(t.getMessage());
+
 			return false;
 		}
 	}
@@ -118,12 +136,11 @@ public class TestBase {
 		} else if (element.toLowerCase().contains("_tagname")) {
 			return driver.findElement(By.tagName(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_linktext")) {
-			return driver.findElement(By.linkText(OR.getProperty(element)));
-		} else if (element.toLowerCase().contains("_partiallinktext")) {
-			return driver.findElement(By.partialLinkText(OR
-					.getProperty(element)));
+			return driver.findElement(By.linkText(OR.getProperty(element)));		
 		} else if (element.toLowerCase().contains("_classname")) {
 			return driver.findElement(By.className(OR.getProperty(element)));
+		} else if (element.toLowerCase().contains("_partiallinktext")) {
+		return driver.findElement(By.partialLinkText(OR.getProperty(element)));
 		}
 		return null;
 	}
@@ -133,21 +150,32 @@ public class TestBase {
 
 	public void click(String element) {
 
+//		Logger log = LogManager.getLogger("click");
+
 		getElement(element).click();
+
 		log.info("Clicked " + element);
+
 		waitForPageToLoad();
 	}
 
 	public void type(String element, String text) {
 
+//		Logger log = LogManager.getLogger("type");
+
 		getElement(element).sendKeys(text);
+
 		log.info("Typed " + text + " into " + element);
 	}
 
 	public void selectByVisibleText(String element, String visibleText) {
+
+//		Logger log = LogManager.getLogger("select");
+
 		Select sel = new Select(getElement(element));
 		sel.selectByVisibleText(visibleText);
-		log.info("Selected " + visibleText + " in the " + element);		
+
+		log.info("Selected " + visibleText + " in the " + element);
 	}
 
 	public String read(String element) {
@@ -160,6 +188,8 @@ public class TestBase {
 	}
 
 	public void waitForPageToLoad() {
+
+//		Logger log = LogManager.getLogger("waitForPageToLoad");
 
 		ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
 			@Override
@@ -175,7 +205,8 @@ public class TestBase {
 					Integer.parseInt(config.getProperty("explicitWait")));
 			wait.until(expectation);
 		} catch (Throwable error) {
-			log.error ("Timed out loading a page.");
+			log.error("Timed out loading a page.");
+
 			Assert.fail();
 		}
 	}
