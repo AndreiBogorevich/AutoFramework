@@ -6,4 +6,15 @@
       <class name="testcases.XYZBank"/>
     </classes>
   </test> <!-- Default test -->
+  <test name="Default test(failed)">
+    <classes>
+      <class name="testcases.XYZBank">
+        <methods>
+          <include name="setUp"/>
+          <include name="depositTest" invocation-numbers="3"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- testcases.XYZBank -->
+    </classes>
+  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
