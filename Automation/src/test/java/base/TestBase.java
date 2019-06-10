@@ -88,7 +88,35 @@ public class TestBase {
 		return config;
 	}
 
-	public static boolean setOR(String site, String page) {
+//	public static boolean setOR(String site, String page) {
+//
+//
+//		try {
+//			OR = new Properties();
+//			FileInputStream fis = new FileInputStream(
+//					System.getProperty("user.dir")
+//							+ "\\src\\test\\resources\\object_reporsitory\\"
+//							+ site + "\\" + page + ".properties");
+//
+//			OR.load(fis);
+//			// adding hard-coded wait for the properties to load
+//			Thread.sleep(1000L);
+//
+//			log.info(site + "\\" + page + ".properties"
+//					+ " is successfully loaded into OR property.");
+//
+//			return true;
+//
+//		} catch (Throwable t) {
+//
+//			log.error("Error loading " + site + "\\" + page + ".properties");
+//			log.error(t.getMessage());
+//
+//			return false;
+//		}
+//	}
+	
+	public static boolean setOR(String sOrFileName) {
 
 
 		try {
@@ -96,18 +124,21 @@ public class TestBase {
 			FileInputStream fis = new FileInputStream(
 					System.getProperty("user.dir")
 							+ "\\src\\test\\resources\\object_reporsitory\\"
-							+ site + "\\" + page + ".properties");
+							+ sOrFileName + ".properties");
 
 			OR.load(fis);
+			
+			// adding hard-coded wait for the properties to load
+			Thread.sleep(1000L);
 
-			log.info(site + "\\" + page + ".properties"
+			log.info(sOrFileName + ".properties"
 					+ " is successfully loaded into OR property.");
 
 			return true;
 
 		} catch (Throwable t) {
 
-			log.error("Error loading " + site + "\\" + page + ".properties");
+			log.error("Error loading " + sOrFileName + ".properties");
 			log.error(t.getMessage());
 
 			return false;
@@ -228,8 +259,8 @@ public class TestBase {
 	
 	public static void navigateToUrl(String sUrl){
 		
-		driver.get(sUrl);
 		log.info("Navigating to "+ sUrl);
+		driver.get(sUrl);
 		driver.manage().window().maximize();
 
 		// waiting for the page to load
