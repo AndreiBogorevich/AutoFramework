@@ -89,34 +89,6 @@ public class TestBase {
 		return config;
 	}
 
-//	public static boolean setOR(String site, String page) {
-//
-//
-//		try {
-//			OR = new Properties();
-//			FileInputStream fis = new FileInputStream(
-//					System.getProperty("user.dir")
-//							+ "\\src\\test\\resources\\object_reporsitory\\"
-//							+ site + "\\" + page + ".properties");
-//
-//			OR.load(fis);
-//			// adding hard-coded wait for the properties to load
-//			Thread.sleep(1000L);
-//
-//			log.info(site + "\\" + page + ".properties"
-//					+ " is successfully loaded into OR property.");
-//
-//			return true;
-//
-//		} catch (Throwable t) {
-//
-//			log.error("Error loading " + site + "\\" + page + ".properties");
-//			log.error(t.getMessage());
-//
-//			return false;
-//		}
-//	}
-	
 	public static boolean setOR(String sOrFileName) {
 		
 		String sFile = System.getProperty("user.dir")
