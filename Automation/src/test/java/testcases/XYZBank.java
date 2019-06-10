@@ -25,16 +25,16 @@ public class XYZBank extends TestBase {
 		Assert.assertTrue(setOR("XYZBankOR"));
 	}
 
-	// *****************        TESTS         ********************* 
-	
+	// ***************** TESTS *********************
+
 	/*
-	 * This test logs into the XYz Bank site Selects a customer (test properties
-	 * file) Cleans the Balance before each deposit Deposits an amount as per
-	 * test data file Evaluates if the deposit was successful, i.e. balance =
-	 * deposit amount or if it failed and balance remained at 0 Expected result
-	 * is taken from the test data file
+	 * This test 1) logs into the XYz Bank site 2) Selects a customer (test
+	 * properties file) 3) Cleans the Balance before each deposit 4) Deposits an
+	 * amount as per test data file 5) Evaluates if the deposit was successful,
+	 * i.e. balance = deposit amount or 6) if it failed and balance remained at
+	 * 0. Expected result is taken from the test data file
 	 */
-	@Test (priority = 1, dataProvider = "getDepositData", enabled=true)
+	@Test(priority = 1, dataProvider = "getDepositData", enabled = true)
 	public void depositTest(Hashtable<String, String> data) throws IOException {
 
 		login(TestConfig.getProperty("deposit.customer"));
@@ -56,15 +56,16 @@ public class XYZBank extends TestBase {
 	}
 
 	/*
-	 * This test logs into the XYZ Bank site Selects a customer (test properties
-	 * file) Cleans the Balance before each deposit Deposits an amount as per
-	 * test data file Withdraws an amount as per test data file Evaluates if the
-	 * withdrawal was successful, i.e. balance = deposit - withdrawal or if it
-	 * failed and balance remained as deposit Expected result is taken from the
-	 * test data file
+	 * This test 1) logs into the XYZ Bank site 2) Selects a customer (test
+	 * properties file) 3) Cleans the Balance before each deposit 4) Deposits an
+	 * amount as per test data file 5) Withdraws an amount as per test data file
+	 * 6) Evaluates if the withdrawal was successful, i.e. balance = deposit -
+	 * withdrawal or 7) if it failed and balance remained as deposit. Expected
+	 * result is taken from the test data file
 	 */
-	@Test (priority = 2, dataProvider = "getWithdrawalData", enabled = true)
-	public void withdrawalTest(Hashtable<String, String> data) throws IOException {
+	@Test(priority = 2, dataProvider = "getWithdrawalData", enabled = true)
+	public void withdrawalTest(Hashtable<String, String> data)
+			throws IOException {
 
 		login(TestConfig.getProperty("withdrawal.customer"));
 		// resetting transaction before each deposit test to have 0 balance
@@ -74,11 +75,11 @@ public class XYZBank extends TestBase {
 		withdraw(data.get("withdrawal"));
 
 		// expected balance = deposit - withdrawal
-		String expectedBalance = String.valueOf
-				(Integer.parseInt(data.get("deposit")) 
-				- Integer.parseInt(data.get("withdrawal")));
+		String expectedBalance = String.valueOf(Integer.parseInt(data
+				.get("deposit")) - Integer.parseInt(data.get("withdrawal")));
 
-		// if expected result is pass then balance should be equal to calculated balance
+		// if expected result is pass then balance should be equal to calculated
+		// balance
 		if (data.get("expectedResult").toLowerCase().equals("pass")) {
 			Assert.assertEquals(read("account.lableBalanceValue_Xpath"), // actual
 					expectedBalance); // expected
@@ -90,8 +91,8 @@ public class XYZBank extends TestBase {
 		}
 	}
 
-	// *****************        DATA PROVIDERS         *********************
-	
+	// ***************** DATA PROVIDERS *********************
+
 	@DataProvider
 	public static Object[][] getDepositData() throws IOException {
 
@@ -110,8 +111,8 @@ public class XYZBank extends TestBase {
 				+ TestConfig.getProperty("withdrawal.testData"));
 	}
 
-	// *****************        KEYWORDS         *********************
-	
+	// ***************** KEYWORDS *********************
+
 	public void login(String customerName) throws IOException {
 
 		navigateToUrl(OR.getProperty("login.url"));
