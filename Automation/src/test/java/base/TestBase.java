@@ -33,6 +33,7 @@ public class TestBase {
 	protected static WebDriver driver;
 	private static Properties config;
 	protected static Properties OR;
+	protected static Properties TestConfig;
 
 	protected static final Logger log = LogManager.getLogger(TestBase.class);
 
@@ -117,28 +118,56 @@ public class TestBase {
 //	}
 	
 	public static boolean setOR(String sOrFileName) {
-
+		
+		String sFile = System.getProperty("user.dir")
+				+ "\\src\\test\\resources\\object_reporsitory\\"
+				+ sOrFileName 
+				+ ".properties";
 
 		try {
 			OR = new Properties();
-			FileInputStream fis = new FileInputStream(
-					System.getProperty("user.dir")
-							+ "\\src\\test\\resources\\object_reporsitory\\"
-							+ sOrFileName + ".properties");
+			FileInputStream fis = new FileInputStream(sFile);
 
 			OR.load(fis);
 			
 			// adding hard-coded wait for the properties to load
 			Thread.sleep(1000L);
 
-			log.info(sOrFileName + ".properties"
-					+ " is successfully loaded into OR property.");
+			log.info(sFile + " is successfully loaded into OR property.");
 
 			return true;
 
 		} catch (Throwable t) {
 
-			log.error("Error loading " + sOrFileName + ".properties");
+			log.error("Error loading " + sFile);
+			log.error(t.getMessage());
+
+			return false;
+		}
+	}
+	
+	public static boolean setTestConfig(String sTestConfigFileName) {
+		
+		String sFile = System.getProperty("user.dir")
+				+ "\\src\\test\\resources\\properties\\"
+				+ sTestConfigFileName 
+				+ ".properties";
+
+		try {
+			TestConfig = new Properties();			
+			FileInputStream fis = new FileInputStream(sFile);
+			TestConfig.load(fis);
+			
+			// adding hard-coded wait for the properties to load
+			Thread.sleep(1000L);
+
+			log.info(sFile + " is successfully loaded into TestConfig property.");
+
+			return true;
+
+		} catch (Throwable t) {
+
+			log.error("Error loading " + sFile);
 			log.error(t.getMessage());
 
 			return false;

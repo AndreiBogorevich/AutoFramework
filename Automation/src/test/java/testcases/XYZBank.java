@@ -13,11 +13,6 @@ import utils.Csv;
 import base.TestBase;
 
 public class XYZBank extends TestBase {
-
-	private String customer = "Harry Potter"; // to be replaced with data from a file	
-	
-	private static String sDepositTestData = System.getProperty("user.dir")
-			+ "\\src\\test\\resources\\testData\\XYZBank\\depositTest.csv";
 	
 	@BeforeMethod
 	public void startTest(){
@@ -26,14 +21,15 @@ public class XYZBank extends TestBase {
 	
 	@BeforeSuite
 	public void startSuite(){
-		Assert.assertTrue(setOR("XYZBankOR"));
+		Assert.assertTrue(setTestConfig("XYZBankTests"));
+		Assert.assertTrue(setOR("XYZBankOR"));		
 	}
 	
 
 	@Test(priority = 1, dataProvider = "getDepositData")
 	public void depositTest(Hashtable<String, String> data) throws IOException {
 
-		login(customer);
+		login(TestConfig.getProperty("deposit.customer"));
 		// resetting transaction before each deposit test to have 0 balance
 		resetTransactions();
 
@@ -58,7 +54,9 @@ public class XYZBank extends TestBase {
 	@DataProvider
 	public static Object[][] getDepositData() throws IOException {
 
-		return Csv.getData(sDepositTestData);
+		log.info("Reading test data from: " + TestConfig.getProperty("deposit.testData"));
+		return Csv.getData(System.getProperty("user.dir")+
+				TestConfig.getProperty("deposit.testData"));
 	}
 
 	public void login(String customerName) throws IOException {
