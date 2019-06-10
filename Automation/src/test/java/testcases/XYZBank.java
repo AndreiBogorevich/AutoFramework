@@ -15,7 +15,7 @@ public class XYZBank extends TestBase {
 	private String customer = "Harry Potter"; // to be replaced with data from a
 												// file
 	private static String sDepositTestData = System.getProperty("user.dir")
-			+ "\\src\\test\\resources\\testData\\XYZBank\\depostTest.csv";
+			+ "\\src\\test\\resources\\testData\\XYZBank\\depositTest.csv";
 
 	@Test(priority = 1, dataProvider = "getDepositData")
 	public void depositTest(Hashtable<String, String> data) throws IOException {
@@ -95,7 +95,7 @@ public class XYZBank extends TestBase {
 		Assert.assertTrue(setOR("XYZBank", "listTx"));
 		navigateToUrl();
 
-		if (getNumberOfRowsInTable(OR.getProperty("tableTransactions")) > 0) {
+		if (getElement("btnReset_Xpath").isDisplayed()) {
 			click("btnReset_Xpath");
 		}
 		driver.navigate().back();

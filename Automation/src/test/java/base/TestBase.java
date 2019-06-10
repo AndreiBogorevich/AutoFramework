@@ -34,7 +34,7 @@ public class TestBase {
 	private static Properties config;
 	protected static Properties OR;
 
-	private static final Logger log = LogManager.getLogger(TestBase.class);
+	protected static final Logger log = LogManager.getLogger(TestBase.class);
 
 	@BeforeSuite
 	public void setUp() throws IOException {
