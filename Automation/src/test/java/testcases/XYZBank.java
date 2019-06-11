@@ -118,7 +118,7 @@ public class XYZBank extends TestBase {
 		selectByVisibleText("customer.selectYourName_Xpath", customerName);
 		click("customer.btnLogin_Xpath");
 		
-		Reporter.log("Logging in as " + customerName + ".\r\n");
+		report("Logging in as " + customerName);
 	}
 
 	public void deposit(String amount) {
@@ -129,7 +129,7 @@ public class XYZBank extends TestBase {
 		type("account.txtAmount_Xpath", amount);
 		click("account.btnSubmit_Xpath");
 
-		Reporter.log("Depositing " + amount + ".\r\n");
+		report("Depositing " + amount);
 	}
 
 	public void withdraw(String amount) {
@@ -140,7 +140,7 @@ public class XYZBank extends TestBase {
 		type("account.txtAmount_Xpath", amount);
 		click("account.btnSubmit_Xpath");
 
-		Reporter.log("Withdrawing " + amount + ".\r\n");
+		report("Withdrawing " + amount);
 	}
 
 	public void resetTransactions() {
@@ -149,11 +149,11 @@ public class XYZBank extends TestBase {
 
 		if (getElement("listTx.btnReset_Xpath").isDisplayed()) {
 			click("listTx.btnReset_Xpath");
-			Reporter.log("Previous transactions are deleted. Balance is set to 0. \r\n");
+			report("Previous transactions are deleted. Balance is set to 0.");
 		}
 		else
 		{
-			Reporter.log("Trying to delete transactions - no transactions found. \r\n");
+			report("Trying to delete transactions - no transactions found.");
 		}
 		driver.navigate().back();
 	}

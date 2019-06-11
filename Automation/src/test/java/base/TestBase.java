@@ -289,11 +289,8 @@ public class TestBase {
 	
 	public void checkResults(String sActual, String sExpected) {
 
-		Reporter.log("Evaluating results." + "\t Actual: " + sActual
+		report("Evaluating results." + "\t Actual: " + sActual
 				+ "\t Expected: " + sExpected);	
-		
-		log.info("Evaluating results." + "\t Actual: " + sActual
-				+ "\t Expected: " + sExpected + ".\r\n");
 
 		Assert.assertEquals(sActual, sExpected);
 	}
@@ -304,5 +301,12 @@ public class TestBase {
 		
 		checkResults(sActual, sExpected);
 
+	}
+	
+	public void report(String sText){
+		Reporter.log(sText);
+		Reporter.log("<br>");
+		
+		log.info(sText);
 	}
 }
