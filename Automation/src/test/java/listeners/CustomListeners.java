@@ -5,6 +5,8 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
+import utils.Screen;
+
 public class CustomListeners implements ITestListener {
 
 	@Override
@@ -24,10 +26,10 @@ public class CustomListeners implements ITestListener {
 		// Capturing a screenshot and adding it to the report
 		
 		System.setProperty("org.uncommons.reportng.escape-output","false");
-		Reporter.log("Screenshot of the test failure.");
-		Reporter.log("<a target=\"_blank\" href=\"D:\\AB\\CVs_CoverLetters\\profile_picture2.png\">Screenshot</a>");
+		Screen.captureScreenshot();
+		Reporter.log("<a target=\"_blank\" href=" + Screen.screenshotFile + ">Screenshot</a>");
 		Reporter.log("<br>");
-		Reporter.log("<a target=\"_blank\" href=\"D:\\AB\\CVs_CoverLetters\\profile_picture2.png\"><img src=\"D:\\AB\\CVs_CoverLetters\\profile_picture2.png\" height=200 width=200></img></a>");
+		Reporter.log("<a target=\"_blank\" href=" + Screen.screenshotFile + "><img src=" + Screen.screenshotFile + " height=200 width=200></img></a>");
 	}
 
 	@Override

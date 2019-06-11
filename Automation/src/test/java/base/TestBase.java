@@ -16,11 +16,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestBase {
 
@@ -31,7 +29,7 @@ public class TestBase {
 	 */
 
 	protected static WebDriver driver;
-	private static Properties config;
+	protected static Properties config;
 	protected static Properties OR;
 	protected static Properties TestConfig;
 
@@ -280,5 +278,31 @@ public class TestBase {
 	public static int getNumberOfRowsInTable(String elementTable){
 		String sXpath = elementTable+"/tbody/tr";
 		return driver.findElements(By.xpath(sXpath)).size();
+	}
+	
+	public static void highlightElement(String element){
+
+		((JavascriptExecutor) driver).executeScript(
+				"arguments[0].style.border='3px solid red'", getElement(element));
+
+	}
+	
+	public void checkResults(String sActual, String sExpected) {
+
+		Reporter.log("Evaluating results." + "\t Actual: " + sActual
+				+ "\t Expected: " + sExpected);	
+		
+		log.info("Evaluating results." + "\t Actual: " + sActual
+				+ "\t Expected: " + sExpected + ".\r\n");
+
+		Assert.assertEquals(sActual, sExpected);
+	}
+	
+	public void checkResults(String sActual, String sExpected, String elementToHighlight) {
+
+		highlightElement(elementToHighlight);
+		
+		checkResults(sActual, sExpected);
+
 	}
 }

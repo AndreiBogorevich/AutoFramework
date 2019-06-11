@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
@@ -48,7 +49,8 @@ public class XYZBank extends TestBase {
 		// expected balance should be equal to deposit
 		// for negative tests: expected balance is 0
 		checkResults(read("account.lableBalanceValue_Xpath"), // actual
-				data.get("expectedResult")); // expected
+				data.get("expectedResult"), // expected
+				"account.lableBalanceValue_Xpath"); // highlighting balance
 
 	}
 
@@ -76,7 +78,8 @@ public class XYZBank extends TestBase {
 		// if expected balance should be equal to deposit - withdrawal
 		// for negative tests: expected balance should be equal to deposit
 		checkResults(read("account.lableBalanceValue_Xpath"), // actual
-				data.get("expectedResult")); // expected
+				data.get("expectedResult"), // expected
+				"account.lableBalanceValue_Xpath"); // highlighting balance
 
 	}
 
@@ -87,6 +90,7 @@ public class XYZBank extends TestBase {
 
 		log.info("Reading test data from: "
 				+ TestConfig.getProperty("deposit.testData"));
+		
 		return Csv.getData(System.getProperty("user.dir")
 				+ TestConfig.getProperty("deposit.testData"));
 	}
@@ -113,8 +117,8 @@ public class XYZBank extends TestBase {
 
 		selectByVisibleText("customer.selectYourName_Xpath", customerName);
 		click("customer.btnLogin_Xpath");
-
-		log.info("Logging in as " + customerName);
+		
+		Reporter.log("Logging in as " + customerName + ".\r\n");
 	}
 
 	public void deposit(String amount) {
@@ -125,7 +129,7 @@ public class XYZBank extends TestBase {
 		type("account.txtAmount_Xpath", amount);
 		click("account.btnSubmit_Xpath");
 
-		log.info("Depositing " + amount);
+		Reporter.log("Depositing " + amount + ".\r\n");
 	}
 
 	public void withdraw(String amount) {
@@ -136,7 +140,7 @@ public class XYZBank extends TestBase {
 		type("account.txtAmount_Xpath", amount);
 		click("account.btnSubmit_Xpath");
 
-		log.info("Withdrawing " + amount);
+		Reporter.log("Withdrawing " + amount + ".\r\n");
 	}
 
 	public void resetTransactions() {
@@ -145,16 +149,12 @@ public class XYZBank extends TestBase {
 
 		if (getElement("listTx.btnReset_Xpath").isDisplayed()) {
 			click("listTx.btnReset_Xpath");
-			log.info("Previous transactions are deleted. Balance is set to 0.");
+			Reporter.log("Previous transactions are deleted. Balance is set to 0. \r\n");
+		}
+		else
+		{
+			Reporter.log("Trying to delete transactions - no transactions found. \r\n");
 		}
 		driver.navigate().back();
-	}
-
-	public void checkResults(String sActualBalance, String sExpectedBalance) {
-
-		log.info("Evaluating results." + "\t Actual: " + sActualBalance
-				+ "\t Expected: " + sExpectedBalance);
-
-		Assert.assertEquals(sActualBalance, sExpectedBalance);
 	}
 }
