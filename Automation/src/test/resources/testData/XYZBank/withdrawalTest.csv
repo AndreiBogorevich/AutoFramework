@@ -1,8 +1,8 @@
 deposit,withdrawal,expectedResult
-1000,340,pass
-1000,1200,fail
-1000,-500,fail
-111,111,pass
-1,0,fail
-1,zero,fail
-10,4.3,fail
+1000,340,660
+1000,1200,1000
+1000,-500,1000
+111,111,0
+1,0,1
+1,zero,1
+10,4.3,10

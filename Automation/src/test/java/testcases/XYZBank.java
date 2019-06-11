@@ -37,22 +37,19 @@ public class XYZBank extends TestBase {
 	@Test(priority = 1, dataProvider = "getDepositData", enabled = true)
 	public void depositTest(Hashtable<String, String> data) throws IOException {
 
+		// reading test customer name from test config and logging in
 		login(TestConfig.getProperty("deposit.customer"));
+
 		// resetting transaction before each deposit test to have 0 balance
 		resetTransactions();
 
 		deposit(data.get("deposit"));
 
-		// if expected result is pass then balance should be equal to deposit
-		if (data.get("expectedResult").toLowerCase().equals("pass")) {
-			Assert.assertEquals(read("account.lableBalanceValue_Xpath"), // actual
-					data.get("deposit")); // expected
-		}
-		// otherwise the balance should be 0
-		else {
-			Assert.assertEquals(read("account.lableBalanceValue_Xpath"), // actual
-					"0"); // expected
-		}
+		// expected balance should be equal to deposit
+		// for negative tests: expected balance is 0
+		checkResults(read("account.lableBalanceValue_Xpath"), // actual
+				data.get("expectedResult")); // expected
+
 	}
 
 	/*
@@ -66,29 +63,21 @@ public class XYZBank extends TestBase {
 	@Test(priority = 2, dataProvider = "getWithdrawalData", enabled = true)
 	public void withdrawalTest(Hashtable<String, String> data)
 			throws IOException {
-
+		
+		// reading test customer name from test config and logging in
 		login(TestConfig.getProperty("withdrawal.customer"));
+		
 		// resetting transaction before each deposit test to have 0 balance
 		resetTransactions();
 
 		deposit(data.get("deposit"));
 		withdraw(data.get("withdrawal"));
 
-		// expected balance = deposit - withdrawal
-		String expectedBalance = String.valueOf(Integer.parseInt(data
-				.get("deposit")) - Integer.parseInt(data.get("withdrawal")));
+		// if expected balance should be equal to deposit - withdrawal
+		// for negative tests: expected balance should be equal to deposit
+		checkResults(read("account.lableBalanceValue_Xpath"), // actual
+				data.get("expectedResult")); // expected
 
-		// if expected result is pass then balance should be equal to calculated
-		// balance
-		if (data.get("expectedResult").toLowerCase().equals("pass")) {
-			Assert.assertEquals(read("account.lableBalanceValue_Xpath"), // actual
-					expectedBalance); // expected
-		}
-		// otherwise it should be equal to deposit, since withdrawal failed
-		else {
-			Assert.assertEquals(read("account.lableBalanceValue_Xpath"), // actual
-					data.get("deposit")); // expected
-		}
 	}
 
 	// ***************** DATA PROVIDERS *********************
@@ -159,5 +148,13 @@ public class XYZBank extends TestBase {
 			log.info("Previous transactions are deleted. Balance is set to 0.");
 		}
 		driver.navigate().back();
+	}
+
+	public void checkResults(String sActualBalance, String sExpectedBalance) {
+
+		log.info("Evaluating results." + "\t Actual: " + sActualBalance
+				+ "\t Expected: " + sExpectedBalance);
+
+		Assert.assertEquals(sActualBalance, sExpectedBalance);
 	}
 }
