@@ -96,9 +96,9 @@ public class XYZBank extends TestBase {
 
 		click("login.btnCustomerLogin_Xpath");
 		// it should open another page - which is verified below
-		Assert.assertEquals(driver.getCurrentUrl(),
-				OR.getProperty("customer.url"));
-
+		checkResults(driver.getCurrentUrl(), // actual
+				OR.getProperty("customer.url")); // expected
+		
 		selectByVisibleText("customer.selectYourName_Xpath", customerName);
 		click("customer.btnLogin_Xpath");
 
