@@ -7,18 +7,16 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
+import base.TestBase;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.ExtentManager;
 import utils.Screen;
 
-public class CustomListeners implements ITestListener {
+public class CustomListeners extends TestBase implements ITestListener {
 	
-    //Extent Report Declarations
-    private static ExtentReports extent = ExtentManager.createInstance();
-    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
-
 	@Override
 	public void onTestStart(ITestResult result) {
 
@@ -46,7 +44,7 @@ public class CustomListeners implements ITestListener {
 		Reporter.log("<a target=\"_blank\" href=" + Screen.screenshotFile + "><img src=" + Screen.screenshotFile + " height=200 width=200></img></a>");
 		
 		// updating extent report
-        test.get().fail("Test passed");
+        test.get().fail("Test failed");
         try {
 			test.get().addScreenCaptureFromPath(Screen.screenshotFile);
 		} catch (IOException e) {

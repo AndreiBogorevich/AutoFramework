@@ -20,6 +20,11 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import utils.ExtentManager;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
 public class TestBase {
 
 	/*
@@ -29,12 +34,18 @@ public class TestBase {
 	 */
 
 	protected static WebDriver driver;
+	
+	//properties declarations
 	protected static Properties config;
 	protected static Properties OR;
 	protected static Properties TestConfig;
 
+	//log4j2 declarations
 	protected static final Logger log = LogManager.getLogger(TestBase.class);
 
+	//Extent Report Declarations
+    protected static ExtentReports extent = ExtentManager.createInstance();
+    protected static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
 	@BeforeSuite
 	public void setUp() throws IOException {
@@ -305,9 +316,15 @@ public class TestBase {
 	}
 	
 	public void report(String sText){
+		
+		// reporting using ReportNG
 		Reporter.log(sText);
 		Reporter.log("<br>");
 		
+		// reporting using log4j2
 		log.info(sText);
+		
+		// reporting using Extent reports
+		test.get().info(sText);
 	}
 }
