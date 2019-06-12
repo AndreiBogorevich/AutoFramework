@@ -41,7 +41,7 @@ public class TestBase {
 	protected static Properties TestConfig;
 
 	//log4j2 declarations
-	protected static final Logger log = LogManager.getLogger(TestBase.class);
+	public static final Logger log = LogManager.getLogger(TestBase.class);
 
 	//Extent Report Declarations
     protected static ExtentReports extent = ExtentManager.createInstance();
@@ -96,7 +96,7 @@ public class TestBase {
 	}
 
 	public static Properties getOR() {
-		return config;
+		return OR;
 	}
 
 	public static boolean setOR(String sOrFileName) {
@@ -154,6 +154,10 @@ public class TestBase {
 
 			return false;
 		}
+	}
+	
+	public static Properties getTestConfig(){
+		return TestConfig;
 	}
 
 	public static WebElement getElement(String element) {
