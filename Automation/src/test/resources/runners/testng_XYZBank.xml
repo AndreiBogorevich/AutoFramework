@@ -8,7 +8,7 @@
 		<listener class-name="listeners.CustomListeners" />
 	</listeners>
 
-	<test name="Test">
+	<test name="XYZ Bank Tests">
 		<classes>
 			<class name="testcases.XYZBank" />
 		</classes>

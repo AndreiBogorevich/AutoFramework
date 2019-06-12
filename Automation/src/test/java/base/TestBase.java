@@ -35,6 +35,7 @@ public class TestBase {
 
 	protected static final Logger log = LogManager.getLogger(TestBase.class);
 
+
 	@BeforeSuite
 	public void setUp() throws IOException {
 

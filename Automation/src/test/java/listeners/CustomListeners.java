@@ -1,41 +1,66 @@
 package listeners;
 
+import java.io.IOException;
+
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
+import utils.ExtentManager;
 import utils.Screen;
 
 public class CustomListeners implements ITestListener {
+	
+    //Extent Report Declarations
+    private static ExtentReports extent = ExtentManager.createInstance();
+    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
 	@Override
 	public void onTestStart(ITestResult result) {
-		// TODO Auto-generated method stub
+
+		// initiating extent report test
+        ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName(),result.getMethod().getDescription());
+        test.set(extentTest);
 		
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		// TODO Auto-generated method stub
-		
+
+		// updating extent report
+        test.get().pass("Test passed");
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		// Capturing a screenshot and adding it to the report
-		
+		// Capturing a screenshot and adding it to the report		
 		System.setProperty("org.uncommons.reportng.escape-output","false");
 		Screen.captureScreenshot();
 		Reporter.log("<a target=\"_blank\" href=" + Screen.screenshotFile + ">Screenshot</a>");
 		Reporter.log("<br>");
+		Reporter.log("<br>");
 		Reporter.log("<a target=\"_blank\" href=" + Screen.screenshotFile + "><img src=" + Screen.screenshotFile + " height=200 width=200></img></a>");
+		
+		// updating extent report
+        test.get().fail("Test passed");
+        try {
+			test.get().addScreenCaptureFromPath(Screen.screenshotFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		// TODO Auto-generated method stub
-		
+
+		// updating extent report
+		test.get().skip(result.getThrowable());
 	}
 
 	@Override
@@ -52,8 +77,8 @@ public class CustomListeners implements ITestListener {
 
 	@Override
 	public void onFinish(ITestContext context) {
-		// TODO Auto-generated method stub
-		
+
+		extent.flush();		
 	}
 
 }

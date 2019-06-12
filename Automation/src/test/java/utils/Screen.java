@@ -20,7 +20,7 @@ public class Screen extends TestBase {
 		
 		File fFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		
-		screenshotPath = (System.getProperty("user.dir") + config.getProperty("screenshotFolder"));
+		screenshotPath = (System.getProperty("user.dir") + config.getProperty("screenshotAndReportFolder"));
 		
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd_HH.mm.ss").format(new Timestamp(System.currentTimeMillis()));
 		

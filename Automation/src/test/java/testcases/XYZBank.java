@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
