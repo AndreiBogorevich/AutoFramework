@@ -10,11 +10,14 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.testng.Assert;
+
+import base.TestBase;
 
 
 public class Csv {
 	
-	public static Object[][] getData(String sFile) throws IOException{
+	public static Object[][] getData(String sFile){
 		
 		try (Reader reader = Files.newBufferedReader(Paths.get(sFile));
 
@@ -42,8 +45,13 @@ public class Csv {
 						}
 					}
 					return data;
-				}
-		
+				} catch (IOException e) {					
+					TestBase.report("Failed to load test data from " + sFile);			
+					TestBase.log.error(e.getMessage());
+					e.printStackTrace();
+					Assert.fail("Failed to load test data from " + sFile);
+					return null;
+				}		
 	}
 
 }

@@ -53,7 +53,7 @@ public class TestBase {
 		// Loading properties (config.properties file)
 		setConfig();
 
-		// initialising browser that is set up in config.properties file
+		// Initializing browser that is set up in config.properties file
 		driver = Browsers.getBrowser(config.getProperty("browser"));
 
 		// navigating to the starting url as per config.properties file
@@ -241,7 +241,7 @@ public class TestBase {
 		log.info("Selected " + visibleText + " in the " + element);
 	}
 
-	public String read(String element) {
+	public static String read(String element) {
 
 		String sText = getElement(element).getText();
 		if (sText == null) {
@@ -303,15 +303,15 @@ public class TestBase {
 
 	}
 	
-	public void checkResults(String sActual, String sExpected) {
+	public static void checkResults(String sActual, String sExpected) {
 
-		report("Evaluating results." + "\t Actual: " + sActual
-				+ "\t Expected: " + sExpected);	
+		report("Comparing test values.   " + "ACTUAL: " + sActual
+				+ " | EXPECTED: " + sExpected);	
 
 		Assert.assertEquals(sActual, sExpected);
 	}
 	
-	public void checkResults(String sActual, String sExpected, String elementToHighlight) {
+	public static void checkResults(String sActual, String sExpected, String elementToHighlight) {
 
 		highlightElement(elementToHighlight);
 		
@@ -319,7 +319,7 @@ public class TestBase {
 
 	}
 	
-	public void report(String sText){
+	public static void report(String sText){
 		
 		// reporting using ReportNG
 		Reporter.log(sText);
