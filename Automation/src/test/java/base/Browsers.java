@@ -1,18 +1,16 @@
 package base;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Browsers {
 
@@ -29,6 +27,10 @@ public class Browsers {
 			return getChrome();
 		case "ie":
 			return getInternetExplorer();
+		case "internet explorer":
+			return getInternetExplorer();			
+		case "firefox":
+			return getFirefox();
 		default:
 			return getFirefox();
 		}
@@ -70,6 +72,13 @@ public class Browsers {
 		myprofile.setAssumeUntrustedCertificateIssuer(false);
 
 		FirefoxOptions options = new FirefoxOptions();
+
+		// if Firefox is not installed - reading the firfox.exe
+		// location from the config file
+		if (TestBase.getConfig().getProperty("useFirefoxBinary")
+				.equalsIgnoreCase("y")) {
+			options.setBinary(TestBase.getConfig().getProperty("firefoxBinary"));
+		}
 		options.setProfile(myprofile);
 
 		return new FirefoxDriver(options);
