@@ -1,63 +1,50 @@
 package tmp;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import utils.Csv;
 
 public class tmp {
 
-	private static String sFile = System.getProperty("user.dir")
-			+ "\\src\\test\\resources\\testData\\sample.csv";
+	public static void main(String[] args) {
 
-	@Test(dataProvider = "getData")
-	public void testData(Hashtable<String, String> data) {
+		ArrayList<Hashtable<String, String>> data = Csv
+				.getData("C:\\Users\\bogorevich_a\\git\\AutoFramework\\Automation\\src\\test\\resources\\testData\\XYZBank\\depositTest.csv");
+		
+		ArrayList<Hashtable<String, String>> table = new ArrayList<Hashtable<String, String>>();
 
-		System.out.println(data.get("name") + "---" + data.get("age") + "---"
-				+ data.get("gender"));
+		if (data != null) {
 
-	}
 
-	// Hashtable
+			System.out.println(data.size());
+			if (data.get(0).containsKey("runmode")) {
 
-	@DataProvider
-	public static Object[][] getData() throws IOException {
+				for (Hashtable<String, String> row : data) {
 
-		try (Reader reader = Files.newBufferedReader(Paths.get(sFile));
+					if (row.get("runmode").equalsIgnoreCase("y")) {
+						table.add(row);
+					}
 
-		CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
-
-		) {
-			Map<String, String> map = new HashMap();
-
-			List<CSVRecord> csvRecordsList = csvParser.getRecords();
-
-			int rows = csvRecordsList.size();
-			int cols = csvRecordsList.get(0).size();
-			CSVRecord csvHeader = csvRecordsList.get(0);
-
-			Object[][] data = new Object[rows - 1][1];
-			Hashtable<String, String> table = null;
-
-			for (int i = 1; i < rows; i++) {
-				table = new Hashtable<String, String>();
-				CSVRecord csvRecord = csvRecordsList.get(i);
-				for (int y = 0; y < cols; y++) {
-					table.put(csvHeader.get(y), csvRecord.get(y));
-					data[i - 1][0] = table;
 				}
+				int iSize = table.size();
+
+				
+				Object[][] dataObj = new Object[iSize][1];
+				for (int i=0; i <iSize; i++)
+				{
+					dataObj[i][0]=table.get(i);
+					System.out.println(dataObj[i][0]);
+				}
+				
+				
+			} else {
+				System.out.println("the file doesn't have runmodes");
 			}
-			return data;
 		}
+		else{
+			System.out.println("empty file");
+		}
+
 	}
 }

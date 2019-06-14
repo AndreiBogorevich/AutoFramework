@@ -79,9 +79,8 @@
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>3.0.0-M3</version>
 			<configuration>
-				<testFailureIgnore>false</testFailureIgnore>
 				<suiteXmlFiles>
-					<suiteXmlFile>src/test/resources/runners/testng_XYZBank.xml</suiteXmlFile>
+					<suiteXmlFile>\src\test\resources\runners\testng_XYZBank.xml</suiteXmlFile>
 				</suiteXmlFiles>
 			</configuration>
 			<scope>test</scope>
