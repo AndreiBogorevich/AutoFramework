@@ -1,5 +1,7 @@
 package testcases;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.util.Hashtable;
 
@@ -20,8 +22,8 @@ public class XYZBank extends TestBase {
 
 	@BeforeSuite
 	public void startSuite() {
-		Assert.assertTrue(setTestConfig("XYZBankTests"));
-		Assert.assertTrue(setOR("XYZBankOR"));
+		AssertJUnit.assertTrue(setTestConfig("XYZBankTests"));
+		AssertJUnit.assertTrue(setOR("XYZBankOR"));
 	}
 
 	// ***************** TESTS *********************
