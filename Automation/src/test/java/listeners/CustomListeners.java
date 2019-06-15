@@ -37,6 +37,7 @@ public class CustomListeners extends TestBase implements ITestListener,
 
 		// updating extent report
 		test.get().pass(Messages.msgTestPassed);
+		test.remove();
 	}
 
 	@Override

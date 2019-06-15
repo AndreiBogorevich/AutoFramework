@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite">
+<suite name="DemoTests">
 
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
-		<!-- <listener class-name="org.uncommons.reportng.JUnitXMLReporter" /> -->
 		<listener class-name="listeners.CustomListeners" />
 	</listeners>
 
-	<test name="XYZ Bank Tests">
+	<test name="XYZBank">
 		<classes>
 			<class name="testcases.XYZBank" />
 		</classes>
-	</test> <!-- Test -->
-</suite> <!-- Suite -->
+	</test> <!-- XYZBank -->
+</suite> <!-- DemoTests -->
