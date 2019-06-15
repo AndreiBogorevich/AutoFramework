@@ -29,9 +29,9 @@ public class ExtentManager extends TestBase {
 		
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
 		
-		htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
+		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
 		htmlReporter.config().setChartVisibilityOnOpen(true);
-		htmlReporter.config().setTheme(Theme.STANDARD);
+		htmlReporter.config().setTheme(Theme.DARK);
 		htmlReporter.config().setDocumentTitle(fileName);
 		htmlReporter.config().setEncoding("utf-8");
 		htmlReporter.config().setReportName(fileName);

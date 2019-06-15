@@ -34,24 +34,31 @@ public class TestBase {
 	 */
 
 	protected static WebDriver driver;
-	
-	//properties declarations
+
+	// properties declarations
 	protected static Properties config;
 	protected static Properties OR;
 	protected static Properties TestConfig;
 
-	//log4j2 declarations
+	// log4j2 declarations
 	public static final Logger log = LogManager.getLogger(TestBase.class);
 
-	//Extent Report Declarations
-    protected static ExtentReports extent = ExtentManager.createInstance();
-    protected static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+	// Extent Report Declarations
+	protected static ExtentReports extent = ExtentManager.createInstance();
+	protected static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
 	@BeforeSuite
 	public void setUp() throws IOException {
 
 		// Loading properties (config.properties file)
 		setConfig();
+
+		// if the environmental property for browser is set
+		// recording it into the config file
+		if (System.getenv("browser") != null
+				&& !System.getenv("browser").isEmpty()) {
+			config.setProperty("browser", System.getenv("browser"));
+		}
 
 		// Initializing browser that is set up in config.properties file
 		driver = Browsers.getBrowser(config.getProperty("browser"));
@@ -73,7 +80,6 @@ public class TestBase {
 	}
 
 	public static boolean setConfig() {
-
 
 		try {
 			config = new Properties();
@@ -100,10 +106,9 @@ public class TestBase {
 	}
 
 	public static boolean setOR(String sOrFileName) {
-		
+
 		String sFile = System.getProperty("user.dir")
-				+ "\\src\\test\\resources\\object_reporsitory\\"
-				+ sOrFileName 
+				+ "\\src\\test\\resources\\object_reporsitory\\" + sOrFileName
 				+ ".properties";
 
 		try {
@@ -111,7 +116,7 @@ public class TestBase {
 			FileInputStream fis = new FileInputStream(sFile);
 
 			OR.load(fis);
-			
+
 			// adding hard-coded wait for the properties to load
 			Thread.sleep(1000L);
 
@@ -127,23 +132,23 @@ public class TestBase {
 			return false;
 		}
 	}
-	
+
 	public static boolean setTestConfig(String sTestConfigFileName) {
-		
+
 		String sFile = System.getProperty("user.dir")
-				+ "\\src\\test\\resources\\properties\\"
-				+ sTestConfigFileName 
+				+ "\\src\\test\\resources\\properties\\" + sTestConfigFileName
 				+ ".properties";
 
 		try {
-			TestConfig = new Properties();			
+			TestConfig = new Properties();
 			FileInputStream fis = new FileInputStream(sFile);
 			TestConfig.load(fis);
-			
+
 			// adding hard-coded wait for the properties to load
 			Thread.sleep(1000L);
 
-			log.info(sFile + " is successfully loaded into TestConfig property.");
+			log.info(sFile
+					+ " is successfully loaded into TestConfig property.");
 
 			return true;
 
@@ -155,8 +160,8 @@ public class TestBase {
 			return false;
 		}
 	}
-	
-	public static Properties getTestConfig(){
+
+	public static Properties getTestConfig() {
 		return TestConfig;
 	}
 
@@ -173,17 +178,19 @@ public class TestBase {
 		} else if (element.toLowerCase().contains("_tagname")) {
 			return driver.findElement(By.tagName(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_linktext")) {
-			return driver.findElement(By.linkText(OR.getProperty(element)));		
+			return driver.findElement(By.linkText(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_partiallinktext")) {
-			return driver.findElement(By.partialLinkText(OR.getProperty(element)));
+			return driver.findElement(By.partialLinkText(OR
+					.getProperty(element)));
 		} else if (element.toLowerCase().contains("_classname")) {
 			return driver.findElement(By.className(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_partiallinktext")) {
-		return driver.findElement(By.partialLinkText(OR.getProperty(element)));
+			return driver.findElement(By.partialLinkText(OR
+					.getProperty(element)));
 		}
 		return null;
 	}
-	
+
 	public static List<WebElement> getElements(String element) {
 
 		if (element.toLowerCase().contains("_xpath")) {
@@ -197,19 +204,21 @@ public class TestBase {
 		} else if (element.toLowerCase().contains("_tagname")) {
 			return driver.findElements(By.tagName(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_linktext")) {
-			return driver.findElements(By.linkText(OR.getProperty(element)));		
+			return driver.findElements(By.linkText(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_partiallinktext")) {
-			return driver.findElements(By.partialLinkText(OR.getProperty(element)));
+			return driver.findElements(By.partialLinkText(OR
+					.getProperty(element)));
 		} else if (element.toLowerCase().contains("_classname")) {
 			return driver.findElements(By.className(OR.getProperty(element)));
 		} else if (element.toLowerCase().contains("_partiallinktext")) {
-			return driver.findElements(By.partialLinkText(OR.getProperty(element)));
+			return driver.findElements(By.partialLinkText(OR
+					.getProperty(element)));
 		}
 		return null;
 	}
-	
-	public boolean isElementPresent (String element){
-		if (getElement(element)!=null){
+
+	public boolean isElementPresent(String element) {
+		if (getElement(element) != null) {
 			return true;
 		}
 		return false;
@@ -271,10 +280,10 @@ public class TestBase {
 			Assert.fail();
 		}
 	}
-	
-	public static void navigateToUrl(String sUrl){
-		
-		log.info("Navigating to "+ sUrl);
+
+	public static void navigateToUrl(String sUrl) {
+
+		log.info("Navigating to " + sUrl);
 		driver.get(sUrl);
 		driver.manage().window().maximize();
 
@@ -284,50 +293,52 @@ public class TestBase {
 				.implicitlyWait(
 						Long.parseUnsignedLong(config
 								.getProperty("implicitWait")), TimeUnit.SECONDS);
-		
+
 	}
-	
-	public static void navigateToUrl(){
+
+	public static void navigateToUrl() {
 		navigateToUrl(OR.getProperty("url"));
 	}
-	
-	public static int getNumberOfRowsInTable(String elementTable){
-		String sXpath = elementTable+"/tbody/tr";
+
+	public static int getNumberOfRowsInTable(String elementTable) {
+		String sXpath = elementTable + "/tbody/tr";
 		return driver.findElements(By.xpath(sXpath)).size();
 	}
-	
-	public static void highlightElement(String element){
+
+	public static void highlightElement(String element) {
 
 		((JavascriptExecutor) driver).executeScript(
-				"arguments[0].style.border='3px solid red'", getElement(element));
+				"arguments[0].style.border='3px solid red'",
+				getElement(element));
 
 	}
-	
+
 	public static void checkResults(String sActual, String sExpected) {
 
 		report("Comparing test values.   " + "ACTUAL: " + sActual
-				+ " | EXPECTED: " + sExpected);	
+				+ " | EXPECTED: " + sExpected);
 
 		Assert.assertEquals(sActual, sExpected);
 	}
-	
-	public static void checkResults(String sActual, String sExpected, String elementToHighlight) {
+
+	public static void checkResults(String sActual, String sExpected,
+			String elementToHighlight) {
 
 		highlightElement(elementToHighlight);
-		
+
 		checkResults(sActual, sExpected);
 
 	}
-	
-	public static void report(String sText){
-		
+
+	public static void report(String sText) {
+
 		// reporting using ReportNG
 		Reporter.log(sText);
 		Reporter.log("<br>");
-		
+
 		// reporting using log4j2
 		log.info(sText);
-		
+
 		// reporting using Extent reports
 		test.get().info(sText);
 	}
