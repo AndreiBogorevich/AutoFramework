@@ -1,6 +1,7 @@
 package listeners;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.testng.IInvokedMethod;
@@ -36,6 +37,7 @@ public class CustomListeners extends TestBase implements ITestListener,
 
 		// updating extent report
 		test.get().pass(Messages.msgTestPassed);
+		test.remove();
 	}
 
 	@Override
@@ -97,22 +99,22 @@ public class CustomListeners extends TestBase implements ITestListener,
 			// checking if the use runnable file flag is set in propterties
 			if (TestBase.getTestConfig().getProperty("general.flagUseRunnable")
 					.equalsIgnoreCase("y")) {
-				
+
 				// reading data from the runnable file
-				Object[][] tests = Csv.getData(System.getProperty("user.dir")
+				ArrayList<Hashtable<String, String>> table = Csv.getData(System
+						.getProperty("user.dir")
 						+ TestBase.getTestConfig().getProperty(
 								"general.runnable"));
 
 				// looking for the current test name in the runnable test file
-				for (int i = 0; i < tests.length; i++) {
-					
-					Hashtable<String, String> data = (Hashtable) tests[i][0];
-					
+				for (Hashtable<String, String> tableRow : table) {
+
 					// if the current test exists in the runnable file
-					if (data.get("testCaseName").equalsIgnoreCase(testResult.getName())) {		
+					if (tableRow.get("testCaseName").equalsIgnoreCase(
+							testResult.getName())) {
 
 						// and the flag is NOT set to "y" - skip the test
-						if (!data.get("runnable").equalsIgnoreCase("y")) {
+						if (!tableRow.get("runnable").equalsIgnoreCase("y")) {
 
 							throw new SkipException(
 									Messages.msgSkipTestAsNotRunnable);
